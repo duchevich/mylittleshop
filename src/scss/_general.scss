@@ -1,0 +1,91 @@
+body {
+	font-family: "Roboto", sans-serif;
+	font-size: 16px;
+	color: $black;
+}
+a,
+button,
+.btn {
+	transition: all 0.2s linear;
+}
+.site-wrapper {
+}
+.wrapper {
+	display: flex;
+	justify-content: space-between;
+}
+.main {
+	min-height: 90vh;
+}
+.app {
+	padding: 50px 0;
+}
+.shop {
+	display: flex;
+	gap: 30px;
+	flex-wrap: wrap;
+}
+.card {
+	width: calc(25% - 30px);
+	text-align: center;
+	padding: 25px;
+	&__name {
+		font-size: 22px;
+		font-weight: 700;
+	}
+	&__price {
+		margin-top: 10px;
+		margin-bottom: 40px;
+	}
+	&__btn {
+		background: $pink;
+		color: $white;
+		&:hover {
+			background: $black;
+			color: $white;
+		}
+	}
+}
+.cart {
+	&__table {
+	}
+	&__tr {
+		display: flex;
+		justify-content: space-between;
+	}
+	&__name {
+		font-size: 20px;
+		font-weight: 700;
+	}
+	&__sum {
+		font-weight: 700;
+	}
+	&__all {
+		margin-top: 20px;
+		border-top: 1px solid $black;
+		padding: 20px 0 20px 30px;
+		text-align: right;
+		font-size: 20px;
+		font-weight: 700;
+	}
+	&__buttons {
+		text-align: right;
+	}
+	&__checkout {
+		background: $pink;
+		color: $white;
+		&:hover {
+			background: $black;
+			color: $white;
+		}
+	}
+	&__close {
+		margin-top: 30px;
+		background: $black;
+		color: $white;
+		&:hover {
+			background: $pink;
+			color: $white;
+		}
+	}
+}
