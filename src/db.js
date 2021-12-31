@@ -1,46 +1,52 @@
-// // This works on all devices/browsers, and uses IndexedDBShim as a final fallback
-// var indexedDB =
-// 	window.indexedDB ||
-// 	window.mozIndexedDB ||
-// 	window.webkitIndexedDB ||
-// 	window.msIndexedDB ||
-// 	window.shimIndexedDB;
-
-// // Open (or create) the database
-// var openDB = indexedDB.open("store", 1);
-
-// // Create the schema
-// openDB.onupgradeneeded = function () {
-// 	var db = openDB.result;
-// 	var store = db.createObjectStore("products", { keyPath: "id" });
-// 	var index = store.createIndex("NameIndex", ["name.last", "name.first"]);
-// };
-
-// openDB.onsuccess = function () {
-// 	// Start a new transaction
-// 	var db = openDB.result;
-// 	var tx = db.transaction("products", "readwrite");
-// 	var store = tx.objectStore("products");
-// 	var index = store.index("NameIndex");
-
-// 	// Add some data
-// 	store.put({ id: 12345, name: { first: "John", last: "Doe" }, age: 42 });
-// 	store.put({ id: 67890, name: { first: "Bob", last: "Smith" }, age: 35 });
-
-// 	// Query the data
-// 	var getJohn = store.get(12345);
-// 	var getBob = index.get(["Smith", "Bob"]);
-
-// 	getJohn.onsuccess = function () {
-// 		console.log(getJohn.result.name.first); // => "John"
-// 	};
-
-// 	getBob.onsuccess = function () {
-// 		console.log(getBob.result.name.first); // => "Bob"
-// 	};
-
-// 	// Close the db when the transaction is done
-// 	tx.oncomplete = function () {
-// 		db.close();
-// 	};
-// };
+export const prodArr = {
+	1: {
+		name: "product 1",
+		price: 100,
+		qnt: 5,
+	},
+	2: {
+		name: "product 2",
+		price: 150,
+		qnt: 1,
+	},
+	3: {
+		name: "product 3",
+		price: 180,
+		qnt: 7,
+	},
+	4: {
+		name: "product 4",
+		price: 135,
+		qnt: 15,
+	},
+	5: {
+		name: "product 5",
+		price: 120,
+		qnt: 50,
+	},
+	6: {
+		name: "product 6",
+		price: 140,
+		qnt: 0,
+	},
+};
+export const usersArr = {
+	1: {
+		login: "admin",
+		pass: "12345",
+		role: "admin",
+		cash: 150,
+	},
+	2: {
+		login: "user1",
+		pass: "1111",
+		role: "user",
+		cash: 250,
+	},
+	3: {
+		login: "user2",
+		pass: "12345",
+		role: "2222",
+		cash: 200,
+	},
+};
