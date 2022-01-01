@@ -40,11 +40,14 @@ export default class Shop {
 		cont.innerHTML = "";
 		let box = `<div class="cart">`;
 		if (prodArr.length === 0) {
-			box += `Cart is empty`;
+			box += `<div class="cart__mes" id="cartMes"></div>
+					<div class="cart__empty">Cart is empty</div>
+					<div class="cart__buttons">
+						<button class="cart__close btn" id="cartClose">Close cart</button>
+					</div>`;
 		} else {
-			box = `<div class="cart__table">`;
+			box += `<div class="cart__mes" id="cartMes"></div><div class="cart__table">`;
 			for (let item in prodArr) {
-				// sum += prodArr[item].price * prodArr[item].cnt;
 				box += `<div class="cart__tr">
                         <div class="cart__name">${prodArr[item].name}</div>
                         <div class="cart__price">${prodArr[item].price}$</div>
@@ -62,34 +65,82 @@ export default class Shop {
 				<div class="cart__buttons">
 					<button class="cart__checkout btn" id="cartCheckout">Сheckout</button>
 				</div>
+				<div class="cart__buttons">
+					<button class="cart__clean btn" id="cartClean">Clean cart</button>
+					<button class="cart__close btn" id="cartClose">Close cart</button>
+				</div>
 				`;
 		}
 
-		box += `
-		<div class="cart__buttons">
-			<button class="cart__clean btn" id="cartClean">Clean cart</button>
-			<button class="cart__close btn" id="cartClose">Close cart</button>
-		</div>
-		</div>`;
+		box += `</div>`;
 		cont.innerHTML = box;
 	}
 	showOrders(arr) {
 		this.cont.innerHTML = "";
-		let box = `<div class="orders">`;
-		if (this.products.length === 0) {
-			box += `You don't have eny orders`;
+		let box = `<div class="orders"> <div class="orders__title">Your orders</div>`;
+		if (arr.length === 0) {
+			box += `<div class="orders__mes" id="ordersMes"></div>
+					<div class="orders__empty">You don't have any orders</div>
+					<div class="orders__buttons">
+						<button class="orders__close btn" id="ordersClose">Close profile</button>
+					</div>`;
 		} else {
-			box = `<div class="orders__table">`;
+			box += `<div class="orders__table">
+						<div class="orders__tr orders__th">
+                        	<div class="orders__date">
+								<div class="orders__label">Date</div>
+								<div class="orders__nav">
+									<button class="btn" id="ordersDateAsc">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
+											<path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+										</svg>
+									</button>
+									<button class="btn" id="ordersDateDesc">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+  											<path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+										</svg>
+									</button>
+								</div>
+							</div>
+                        	<div class="orders__list">
+								<div class="orders__products">
+									<div class="orders__name">Product</div>
+									<div class="orders__cnt">Quantity</div>
+									<div class="orders__price">Price</div>
+								</div>
+							</div>
+							<div class="orders__sum">
+								<div class="orders__label">Sum</div>
+								<div class="orders__nav">
+									<button class="btn" id="ordersSumAsc">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
+											<path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+										</svg>
+									</button>
+									<button class="btn" id="ordersSumDesc">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+											<path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+										</svg>
+									</button>
+								</div>
+							</div>
+						</div>`;
 			for (let item in arr) {
-				console.log(item);
 				box += `<div class="orders__tr">
-                        	<div class="orders__name">${arr[item].name}</div>
-                        	<div class="orders__price">${arr[item].price}$</div>
-                        	<div class="orders__cnt">${
-								this.products[item].cnt
-							}</div>
-							<div class="orders__sum">${arr[item].price * this.products[item].cnt}$</div>
-                   		</div>`;
+                        	<div class="orders__date">${new Date(
+								arr[item].date,
+							).toGMTString()}</div>
+                        	<div class="orders__list">`;
+				for (let prod in arr[item].products) {
+					box += `<div class="orders__products">
+							<div class="orders__name">${arr[item].products[prod].name}</div>
+							<div class="orders__cnt">${arr[item].products[prod].amt}</div>
+							<div class="orders__price">${arr[item].products[prod].price}</div>
+						</div>`;
+				}
+				box += `</div>
+					<div class="orders__sum">$${arr[item].sum}</div>
+				</div>`;
 			}
 			box += `</div>`;
 		}
@@ -99,6 +150,6 @@ export default class Shop {
 			<button class="orders__close btn" id="ordersClose">Close profile</button>
 		</div>
 		</div>`;
-		cont.innerHTML = box;
+		this.cont.innerHTML = box;
 	}
 }

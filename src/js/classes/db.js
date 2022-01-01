@@ -56,8 +56,8 @@ export default class DB {
 
 	orderArr = {
 		sdsd: {
-			userId: 2,
-			date: 1640991732817,
+			userId: "rfd",
+			date: 1640792742817,
 			sum: 100,
 			products: [
 				{
@@ -68,7 +68,7 @@ export default class DB {
 			],
 		},
 		ertx: {
-			userId: 2,
+			userId: "rfd",
 			date: 1640991732824,
 			sum: 300,
 			products: [
@@ -80,7 +80,7 @@ export default class DB {
 			],
 		},
 		sdex: {
-			userId: 3,
+			userId: "lok",
 			date: 1640991732836,
 			sum: 220,
 			products: [
@@ -95,6 +95,15 @@ export default class DB {
 					amt: 1,
 				},
 			],
+		},
+		asde: {
+			userId: "rfd",
+			date: 1641054804985,
+			products: [
+				{ name: "product 1", price: 100, amt: 1 },
+				{ name: "product 2", price: 150, amt: 1 },
+			],
+			sum: 250,
 		},
 	};
 	init() {
@@ -121,19 +130,24 @@ export default class DB {
 	}
 	getProbuctsOfOrder(cartArr) {
 		let data = JSON.parse(localStorage.getItem("prodArr"));
-
 		let res = [];
 		cartArr.forEach((el) => {
-			res.push(data[el.id]);
+			res.push({
+				name: data[el.id].name,
+				price: data[el.id].price,
+				amt: el.cnt,
+			});
 		});
 
-		let sum = 0;
+		return res;
+	}
+	setProbuctsOfOrder(cartArr) {
+		let data = JSON.parse(localStorage.getItem("prodArr"));
+		cartArr.forEach((el) => {
+			data[el.id].qnt = data[el.id].qnt - el.cnt;
+		});
 
-		for (let item in res) {
-			sum += res[item].price * cartArr[item].cnt;
-		}
-		// localStorage.setItem("orderArr", JSON.stringify(data));
-		return sum;
+		localStorage.setItem("prodArr", JSON.stringify(data));
 	}
 	getProducts() {
 		let data = JSON.parse(localStorage.getItem("prodArr"));
@@ -193,7 +207,7 @@ export default class DB {
 		data[Date.now()] = order;
 		localStorage.setItem("orderArr", JSON.stringify(data));
 	}
-	getOrders(userId) {
+	getOrders(userId, sort, field) {
 		let data = JSON.parse(localStorage.getItem("orderArr"));
 		const res = [];
 		for (let item in data) {
@@ -201,6 +215,13 @@ export default class DB {
 				res.push(data[item]);
 			}
 		}
+		res.sort((prev, next) => {
+			if (sort === "asc") {
+				return prev[field] - next[field];
+			} else {
+				return next[field] - prev[field];
+			}
+		});
 		return res;
 	}
 }

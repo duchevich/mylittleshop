@@ -30,7 +30,12 @@ export default class Cart {
 		document.querySelector("#cart-cnt").textContent = this.products.length;
 	}
 	removeProduct(id) {
-		this.products.splice(id, 1);
+		let tmp = this.products.filter((item) => {
+			if (item.id !== id) {
+				return item;
+			}
+		});
+		this.products = tmp;
 		this.shop.showCart(this.products);
 		document.querySelector("#cart-cnt").textContent = this.products.length;
 	}
@@ -41,15 +46,24 @@ export default class Cart {
 	}
 	checkout(user) {
 		if (this.products.length > 0) {
-			console.log("checkout");
-			user.addOrder({
+			let success = user.addOrder({
 				userId: this.userId,
 				date: Date.now(),
 				sum: this.db.getSumOfOrder(this.products),
 				products: this.db.getProbuctsOfOrder(this.products),
 			});
-			this.products.length = 0;
-			this.withdraw();
+			if (success) {
+				this.db.setProbuctsOfOrder(this.products);
+				this.withdraw();
+				document.querySelector(
+					"#cartMes",
+				).innerHTML = `Your order created`;
+			} else {
+				document.querySelector(
+					"#cartMes",
+				).innerHTML = `Not enough money in the account`;
+				document.querySelector("#cartMes").style.color = "red";
+			}
 		}
 	}
 }

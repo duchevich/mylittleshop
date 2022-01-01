@@ -1,0 +1,21 @@
+.card {
+	width: calc(25% - 30px);
+	text-align: center;
+	padding: 25px;
+	&__name {
+		font-size: 22px;
+		font-weight: 700;
+	}
+	&__price {
+		margin-top: 10px;
+		margin-bottom: 40px;
+	}
+	&__btn {
+		background: $pink;
+		color: $white;
+		&:hover {
+			background: $black;
+			color: $white;
+		}
+	}
+}

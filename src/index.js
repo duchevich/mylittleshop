@@ -6,6 +6,7 @@ import { User } from "./js/classes/user.js";
 let logFlag = false;
 const appCont = document.querySelector("#myApp");
 const cartBtn = document.querySelector(".header__cart");
+const profileBtn = document.querySelector("#profileBtn");
 
 let db = new DB();
 db.init();
@@ -75,7 +76,27 @@ appCont.addEventListener("click", function (e) {
 		document.querySelector(".header__cart").disabled = false;
 		shop.showProducts();
 	}
+	if (e.target.id === "ordersClose") {
+		shop.showProducts();
+	}
+	if (e.target.closest("#ordersDateAsc")) {
+		user.showOrderHistory("asc", "date");
+	}
+	if (e.target.closest("#ordersDateDesc")) {
+		user.showOrderHistory("desc", "date");
+	}
+
+	if (e.target.closest("#ordersSumAsc")) {
+		user.showOrderHistory("asc", "sum");
+	}
+	if (e.target.closest("#ordersSumDesc")) {
+		user.showOrderHistory("desc", "sum");
+	}
 });
 
-console.log(user);
-console.log(cart);
+profileBtn.addEventListener("click", function () {
+	user.showOrderHistory();
+});
+
+// console.log(user);
+// console.log(cart);

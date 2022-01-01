@@ -1,0 +1,64 @@
+.cart {
+	&__mes {
+		font-size: 18px;
+		font-weight: 700;
+		margin-bottom: 20px;
+	}
+	&__empty {
+		font-size: 18px;
+		font-weight: 700;
+		margin-bottom: 20px;
+	}
+	&__table {
+	}
+	&__tr {
+		display: flex;
+		justify-content: space-between;
+	}
+	&__name {
+		font-size: 20px;
+		font-weight: 700;
+	}
+	&__sum {
+		font-weight: 700;
+	}
+	&__all {
+		margin-top: 20px;
+		border-top: 1px solid $black;
+		padding: 20px 0 20px 30px;
+		text-align: right;
+		font-size: 20px;
+		font-weight: 700;
+	}
+	&__buttons {
+		text-align: right;
+	}
+	&__checkout {
+		background: $pink;
+		color: $white;
+		&:hover {
+			background: $black;
+			color: $white;
+		}
+	}
+	&__clean {
+		margin-top: 30px;
+		border: 2px solid $black;
+		color: $black;
+		margin-right: 30px;
+		&:hover {
+			background: $black;
+			color: $white;
+		}
+	}
+	&__close {
+		margin-top: 30px;
+		background: $black;
+		color: $white;
+		border-width: 2px;
+		&:hover {
+			background: $pink;
+			color: $white;
+		}
+	}
+}
