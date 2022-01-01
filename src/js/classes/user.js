@@ -2,6 +2,7 @@ import Cart from "./cart.js";
 import Order from "./order.js";
 import DB from "./db.js";
 import Shop from "./shop.js";
+import Product from "./product.js";
 
 export class User {
 	constructor({ id, login, cash }) {
@@ -34,8 +35,25 @@ export class User {
 }
 
 export class Admin extends User {
-	constructor(login, cash) {
-		super(login, cash);
+	createProduct(name, price, qnt) {
+		if (name && isFinite(price) && isFinite(qnt)) {
+			const product = new Product(name, price, qnt);
+			product.create();
+			this.shop.showAdminPage();
+		} else {
+			document.querySelector("#productErr").innerHTML = "Incorrect data";
+		}
 	}
-	createProduct() {}
+	editProduct(name, price, qnt, id) {
+		if (name && isFinite(price) && isFinite(qnt)) {
+			const product = new Product(name, price, qnt);
+			product.edit(id);
+			this.shop.showAdminPage();
+		} else {
+			document.querySelector("#productErr").innerHTML = "Incorrect data";
+		}
+	}
+	sortProductList(sort, field) {
+		this.shop.showAdminPage(this.db.getSortedProducts(sort, field));
+	}
 }

@@ -30,4 +30,12 @@
 		width: 24px;
 		height: 24px;
 	}
+	&__admin-btn {
+		background: $black;
+		color: $white;
+		&:hover {
+			background: $pink;
+			color: $white;
+		}
+	}
 }

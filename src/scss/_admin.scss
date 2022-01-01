@@ -1,0 +1,67 @@
+.admin {
+	&__top {
+		margin-bottom: 20px;
+		display: flex;
+		justify-content: space-between;
+	}
+	&__new {
+		background: $pink;
+		color: $white;
+		&:hover {
+			background: $black;
+			color: $white;
+		}
+	}
+	&__close {
+	}
+	&__products {
+		border-top: 1px solid $black;
+	}
+	&__product {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		padding: 10px 0;
+		border-bottom: 1px solid $light;
+		&.m-head {
+			border-bottom: 1px solid $black;
+			font-size: 18px;
+			font-weight: 700;
+		}
+	}
+	&__cell {
+		display: flex;
+		justify-content: center;
+		gap: 10px;
+		&.m-first {
+			justify-content: flex-start;
+		}
+	}
+	&__nav {
+		.btn {
+			padding: 0 5px;
+		}
+	}
+	&__product-name {
+		width: 50%;
+	}
+	&__product-qnt {
+		width: 15%;
+		text-align: center;
+	}
+	&__product-price {
+		width: 15%;
+		text-align: center;
+	}
+	&__product-buttons {
+		width: 15%;
+		text-align: center;
+	}
+	&__product-btn {
+		border: 1px solid $black;
+		&:hover {
+			background: $black;
+			color: $white;
+		}
+	}
+}

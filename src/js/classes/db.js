@@ -183,6 +183,80 @@ export default class DB {
 		}
 		return { products: res, sum: sum };
 	}
+	getAllProducts() {
+		let data = JSON.parse(localStorage.getItem("prodArr"));
+		let res = [];
+		for (let key in data) {
+			let tmp = {
+				id: key,
+				name: data[key].name,
+				price: data[key].price,
+				qnt: data[key].qnt,
+			};
+			res.push(tmp);
+		}
+		return res;
+	}
+	getSingleProduct(id) {
+		let data = JSON.parse(localStorage.getItem("prodArr"));
+		for (let key in data) {
+			if (key === id) {
+				return {
+					name: data[key].name,
+					price: data[key].price,
+					qnt: data[key].qnt,
+				};
+			}
+		}
+		return false;
+	}
+	setProduct(product) {
+		let data = JSON.parse(localStorage.getItem("prodArr"));
+		data[Date.now()] = product;
+		localStorage.setItem("prodArr", JSON.stringify(data));
+	}
+	editProduct(product, id) {
+		let data = JSON.parse(localStorage.getItem("prodArr"));
+		for (let key in data) {
+			if (key === id) {
+				data[key].name = product.name;
+				data[key].price = product.price;
+				data[key].qnt = product.qnt;
+			}
+		}
+		localStorage.setItem("prodArr", JSON.stringify(data));
+	}
+	getSortedProducts(sort, field) {
+		let data = JSON.parse(localStorage.getItem("prodArr"));
+		const res = [];
+		for (let key in data) {
+			let tmp = {
+				id: key,
+				name: data[key].name,
+				price: data[key].price,
+				qnt: data[key].qnt,
+			};
+			res.push(tmp);
+		}
+		res.sort((prev, next) => {
+			if (sort === "asc") {
+				if (field === "name") {
+					if (prev[field] < next[field]) return -1;
+					if (prev[field] > next[field]) return 1;
+					return 0;
+				}
+				return prev[field] - next[field];
+			} else {
+				if (field === "name") {
+					if (prev[field] > next[field]) return -1;
+					if (prev[field] < next[field]) return 1;
+					return 0;
+				}
+				return next[field] - prev[field];
+			}
+		});
+		return res;
+	}
 	/**
 	 * Users
 	 */
@@ -195,6 +269,15 @@ export default class DB {
 					login: data[key].login,
 					cash: data[key].cash,
 				};
+			}
+		}
+		return false;
+	}
+	isAdmin(login, pass) {
+		let data = JSON.parse(localStorage.getItem("usersArr"));
+		for (let key in data) {
+			if (data[key].login === login && data[key].pass === pass) {
+				if (data[key].role === "admin") return true;
 			}
 		}
 		return false;
