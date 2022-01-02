@@ -15,6 +15,15 @@
 		display: flex;
 		justify-content: space-between;
 	}
+	&__cnt {
+		.btn {
+			padding: 0 5px;
+		}
+	}
+	&__cnt-svg {
+		width: 22px;
+		height: 22px;
+	}
 	&__name {
 		font-size: 20px;
 		font-weight: 700;

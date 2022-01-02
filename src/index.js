@@ -11,7 +11,6 @@ const adminBtn = document.querySelector("#headerRight");
 
 let db = new DB();
 db.init();
-db.getOrders(2);
 
 let shop = new Shop();
 let user;
@@ -24,6 +23,8 @@ if (userStr && passStr) {
 	let userData = db.getUser(userStr, passStr);
 	if (userData) {
 		logFlag = true;
+		document.querySelector(".header__cart").disabled = false;
+		document.querySelector("#profileBtn").disabled = false;
 		shop.showProducts();
 		let isAdmin = db.isAdmin(userStr, passStr);
 		if (isAdmin) {
@@ -66,6 +67,8 @@ appCont.addEventListener("click", function (e) {
 			sessionStorage.setItem("user", userVal);
 			sessionStorage.setItem("pass", passVal);
 			logFlag = true;
+			document.querySelector(".header__cart").disabled = false;
+			document.querySelector("#profileBtn").disabled = false;
 		}
 		if (!logFlag) {
 			document.querySelector("#userInputVal").value = "";
@@ -78,6 +81,12 @@ appCont.addEventListener("click", function (e) {
 	}
 	if (e.target.classList.contains("cart__rem")) {
 		cart.removeProduct(e.target.dataset.id);
+	}
+	if (e.target.closest(".cart__minus")) {
+		cart.minusProduct(e.target.closest(".cart__minus").dataset.id);
+	}
+	if (e.target.closest(".cart__plus")) {
+		cart.plusProduct(e.target.closest(".cart__plus").dataset.id);
 	}
 	if (e.target.id === "cartClean") {
 		cart.withdraw();
@@ -150,9 +159,11 @@ appCont.addEventListener("click", function (e) {
 });
 
 profileBtn.addEventListener("click", function () {
+	document.querySelector(".header__cart").disabled = false;
 	user.showOrderHistory();
 });
 adminBtn.addEventListener("click", function (e) {
+	document.querySelector(".header__cart").disabled = false;
 	if (e.target.id === "adminBtn") {
 		shop.showAdminPage();
 	}

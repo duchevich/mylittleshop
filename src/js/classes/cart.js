@@ -1,4 +1,5 @@
 import Shop from "./shop";
+import Product from "./product";
 import DB from "./db";
 
 export default class Cart {
@@ -9,6 +10,7 @@ export default class Cart {
 	products = [];
 	shop = new Shop();
 	db = new DB();
+	product = new Product();
 
 	addProduct(id) {
 		let hasProd = false;
@@ -16,16 +18,24 @@ export default class Cart {
 			this.products.push({ id: id, cnt: 1 });
 			document.querySelector("#cart-cnt").textContent =
 				this.products.length;
+			alert("Product added to cart");
 			return;
 		}
 		this.products.forEach((el) => {
 			if (el.id === id) {
-				el.cnt++;
+				let newCnt = el.cnt + 1;
+				if (this.product.substractAmount(newCnt, el.id)) {
+					el.cnt++;
+					alert("Product added to cart");
+				} else {
+					alert("No more this product");
+				}
 				hasProd = true;
 			}
 		});
 		if (!hasProd) {
 			this.products.push({ id: id, cnt: 1 });
+			alert("Product added to cart");
 		}
 		document.querySelector("#cart-cnt").textContent = this.products.length;
 	}
@@ -65,5 +75,33 @@ export default class Cart {
 				document.querySelector("#cartMes").style.color = "red";
 			}
 		}
+	}
+	plusProduct(id) {
+		this.products.forEach((el) => {
+			if (el.id === id) {
+				let newCnt = el.cnt + 1;
+				if (this.product.substractAmount(newCnt, el.id)) {
+					el.cnt++;
+				} else {
+					alert("No more this product");
+				}
+			}
+		});
+		this.shop.showCart(this.products);
+	}
+	minusProduct(id) {
+		let tmp = this.products.filter((item) => {
+			if (item.id !== id) {
+				return item;
+			} else {
+				if (item.cnt > 1) {
+					item.cnt--;
+					return item;
+				}
+			}
+		});
+		this.products = tmp;
+		this.shop.showCart(this.products);
+		document.querySelector("#cart-cnt").textContent = this.products.length;
 	}
 }

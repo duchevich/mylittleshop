@@ -25,6 +25,11 @@ export default class Product {
 		);
 	}
 	substractAmount(amount, id) {
-		this.qnt -= amount;
+		let product = this.db.getSingleProduct(id);
+		if (product.qnt >= amount) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
